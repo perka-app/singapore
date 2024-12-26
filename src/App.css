@@ -5,7 +5,8 @@ body {
     'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f8ff;
+  background-color: #fcf0ff2c;
+  overflow: hidden;
 }
 
 .App {
