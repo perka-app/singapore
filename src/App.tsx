@@ -1,29 +1,54 @@
-import React from 'react';
-import { Container, Typography, TextField, Box } from '@mui/material';
-import './App.css';
+import React, { useEffect } from 'react';
+import { Container, Typography, TextField, Box, Avatar } from '@mui/material';
 import ShineBorder from 'src/components/ui/shine-border';
 import AnimatedGridPattern from 'src/components/ui/animated-grid-pattern';
-import { cn } from 'src/lib/utils';
 import { RainbowButton } from './components/ui/rainbow-button';
+import { useParams } from 'react-router-dom';
+import useOrganisationData from './hooks/useOrganisationData';
+import { cn } from 'src/lib/utils';
+import './App.css';
 
 function App() {
+  const { organisation } = useParams<{ organisation: string }>();
+
+  if (!organisation) {
+    return <div>Organisation not specified</div>;
+  }
+
+  const organisationData = useOrganisationData(organisation);
+
+  useEffect(() => {
+    console.log(organisationData);
+    document.title = organisationData?.name || 'Perka';
+  }, [organisationData]);
+
   return (
     <Container maxWidth="sm" className="App">
       <Box className="App-header z-10">
         <ShineBorder
-          className="flex h-[500px] w-full flex-col items-center justify-center overflow-hidden bg-white"
+          className="flex w-full flex-col items-center justify-center overflow-hidden bg-white"
           color={['#A07CFE', '#FE8FB5', '#FFBE7B']}
         >
+          <Avatar
+            sx={{ width: '50%', height: 'auto' }}
+            alt="avatar"
+            src={organisationData?.avatarUrl}
+          >
+            {organisationData?.name[0]}
+          </Avatar>
           <Typography
             variant="h3"
             component="h1"
             gutterBottom
             sx={{ fontWeight: 'bold', fontFamily: 'Roboto, sans-serif' }}
           >
-            PERKA
+            {organisationData?.name}
           </Typography>
           <Typography variant="overline" gutterBottom>
-            Join our family and stay connected!
+            {organisationData?.description}
+          </Typography>
+          <Typography variant="overline" gutterBottom>
+            {organisationData?.subscribersCount} subscribers
           </Typography>
           <Box
             component="form"
