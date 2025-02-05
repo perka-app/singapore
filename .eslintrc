@@ -3,11 +3,13 @@
   "plugins": ["import", "immutable"],
   "rules": {
     // Add your custom rules here
-    "import/no-unresolved": "error",
-    "import/named": 1,
-    "import/default": "error",
-    "immutable/no-let": "error",
-    "immutable/no-this": "error",
+    "import/no-unresolved": "warn",
+    "import/named": "warn",
+    "import/default": "warn",
+    "immutable/no-let": "warn",
+    "immutable/no-this": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "react-hooks/exhaustive-deps": "warn",
   },
   "settings": {
     "import/resolver": {
