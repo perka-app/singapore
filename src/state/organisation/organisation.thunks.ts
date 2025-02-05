@@ -1,4 +1,3 @@
-import { OrganisationData } from '@/models/organisation';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 const API = process.env.REACT_APP_API_URL;
