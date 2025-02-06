@@ -7,7 +7,7 @@ import './App.css';
 import { NumberTicker } from './components/ui/number-ticker';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  loadingProcessSelector,
+  // loadingProcessSelector,
   loadOrganisation,
   organisationSelector,
 } from './state/organisation';
@@ -16,7 +16,7 @@ import { AppDispatch } from './state/store';
 function App() {
   const { organisation } = useParams<{ organisation: string }>();
   const organisationData = useSelector(organisationSelector);
-  const organisationLoading = useSelector(loadingProcessSelector);
+  // const organisationLoading = useSelector(loadingProcessSelector);
 
   const dispatch = useDispatch<AppDispatch>();
 
