@@ -1,26 +1,36 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Container, Typography, TextField, Box, Avatar } from '@mui/material';
 import ShineBorder from 'src/components/ui/shine-border';
-import AnimatedGridPattern from 'src/components/ui/animated-grid-pattern';
 import { RainbowButton } from './components/ui/rainbow-button';
 import { useParams } from 'react-router-dom';
-import useOrganisationData from './hooks/useOrganisationData';
-import { cn } from 'src/lib/utils';
 import './App.css';
+import { NumberTicker } from './components/ui/number-ticker';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  // loadingProcessSelector,
+  loadOrganisation,
+  organisationSelector,
+} from './state/organisation';
+import { AppDispatch } from './state/store';
 
 function App() {
   const { organisation } = useParams<{ organisation: string }>();
+  const organisationData = useSelector(organisationSelector);
+  // const organisationLoading = useSelector(loadingProcessSelector);
+
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    if (!organisation) {
+      return;
+    }
+
+    dispatch(loadOrganisation(organisation));
+  }, [organisation, dispatch]);
 
   if (!organisation) {
     return <div>Organisation not specified</div>;
   }
-
-  const organisationData = useOrganisationData(organisation);
-
-  useEffect(() => {
-    console.log(organisationData);
-    document.title = organisationData?.name || 'Perka';
-  }, [organisationData]);
 
   return (
     <Container maxWidth="sm" className="App">
@@ -44,11 +54,15 @@ function App() {
           >
             {organisationData?.name}
           </Typography>
-          <Typography variant="overline" gutterBottom>
+          <Typography variant="body1" gutterBottom>
             {organisationData?.description}
           </Typography>
-          <Typography variant="overline" gutterBottom>
-            {organisationData?.subscribersCount} subscribers
+          <Typography variant="button" color="#64017a" gutterBottom>
+            <NumberTicker
+              value={organisationData?.subscribersCount || 0}
+              color="#64017a"
+            />
+            {' subscribers'}
           </Typography>
           <Box
             component="form"
@@ -75,17 +89,6 @@ function App() {
           </Box>
         </ShineBorder>
       </Box>
-
-      <AnimatedGridPattern
-        numSquares={30}
-        maxOpacity={0.1}
-        duration={1}
-        repeatDelay={0.1}
-        className={cn(
-          '[mask-image:radial-gradient(900px_circle_at_center,white,transparent)]',
-          'inset-x-0 inset-y-[-30%] h-[180%] skew-y-12 z-negative',
-        )}
-      />
     </Container>
   );
 }
