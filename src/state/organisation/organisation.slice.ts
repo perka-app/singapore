@@ -1,4 +1,3 @@
-/* eslint-disable immutable/no-mutation */
 import { OrganisationData } from '@/models/organisation';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
